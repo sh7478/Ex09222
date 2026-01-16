@@ -1,6 +1,7 @@
 package com.example.ex09222;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -203,5 +204,10 @@ public class MainActivity extends AppCompatActivity {
         type = -1;
         output = "`";
         mainPage.setBackgroundColor(Color.WHITE);
+    }
+
+    public void goToCredits(View view) {
+        Intent intent = new Intent(this, CreditsPage.class);
+        startActivity(intent);
     }
 }
