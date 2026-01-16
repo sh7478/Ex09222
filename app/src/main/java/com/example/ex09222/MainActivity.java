@@ -17,9 +17,16 @@ import androidx.core.view.WindowInsetsCompat;
 public class MainActivity extends AppCompatActivity {
 
     final String[] types = {"movie", "restaurant", "show", "late night trip"};
+    final String[] movieGear = {"popcorn", "snack", "chocolate", "nachos", "drinks", "3D glasses"};
+    final String[] showGear = {"tickets", "phone", "ID", "portable charger", "deodorant", "manual fan"};
+    final String[] tripGear = {"headLight", "spare batteries", "UV light", "map", "Mosquito spray", "plastic bag"};
+    final String[] restaurantGear = {"wallet", "gum", "portable charger", "phone", "jacket", "glasses"};
     TextView tv;
+    String output;
     LinearLayout mainPage;
     AlertDialog.Builder adb;
+    int type = -1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +41,9 @@ public class MainActivity extends AppCompatActivity {
         adb.setTitle("List of types of activities choose one");
         adb.setItems(types, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                tv.setText("the chosen activity is: "+types[which]);
+                tv.setText("the chosen activity is: " + types[which]);
+                tv.append(" The items for the activity are: ");
+                type = which;
                 switch (which) {
                     case 0:
                         mainPage.setBackgroundColor(Color.YELLOW);
@@ -54,5 +63,88 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog ad = adb.create();
         ad.show();
+    }
+
+    public void choseGear(View view) {
+
+        adb = new AlertDialog.Builder(this);
+
+        adb.setCancelable(false);
+        output = "";
+        if (type == -1) {
+            adb.setTitle("Error");
+            adb.setMessage("You have to choose an activity first");
+            adb.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog ad = adb.create();
+            ad.show();
+        } else {
+            adb.setTitle("List of equipment choose one");
+            switch (type) {
+                case 0:
+                    adb.setMultiChoiceItems(movieGear, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            if (isChecked) {
+                                output += movieGear[which] + ", ";
+                            } else if (tv.toString().contains(movieGear[which])) {
+                                output = output.replace(movieGear[which] + ", ", "");
+                            }
+                        }
+                    });
+                    break;
+                case 1:
+                    adb.setMultiChoiceItems(restaurantGear, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            if (isChecked) {
+                                output += restaurantGear[which] + ", ";
+                            } else if (tv.toString().contains(restaurantGear[which])) {
+                                output = output.replace(restaurantGear[which] + ", ", "");
+                            }
+                        }
+                    });
+                    break;
+                case 2:
+                    adb.setMultiChoiceItems(showGear, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            if (isChecked) {
+                                output += showGear[which] + ", ";
+                            } else if (tv.toString().contains(showGear[which])) {
+                                output = output.replace(showGear[which] + ", ", "");
+                            }
+                        }
+                    });
+                    break;
+                case 3:
+                    adb.setMultiChoiceItems(tripGear, null, new DialogInterface.OnMultiChoiceClickListener() {
+                        public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                            if (isChecked) {
+                                output += tripGear[which] + ", ";
+                            } else if (tv.toString().contains(tripGear[which])) {
+                                output = output.replace(tripGear[which] + ", ", "");
+                            }
+                        }
+                    });
+                    break;
+            }
+            adb.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    tv.append(output.substring(0, output.length() - 2));
+                    dialog.dismiss();
+                }
+            });
+            adb.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+            AlertDialog ad = adb.create();
+            ad.show();
+        }
     }
 }
