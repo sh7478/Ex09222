@@ -17,6 +17,12 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+/**
+ * @author shaked hazan shaked1246@gmail.com
+ * @version 1.0
+ * @since 2024-07-29
+ * this is the main activity of the app, it allows the user to choose an activity and equipment for it.
+ */
 public class MainActivity extends AppCompatActivity {
 
     final String[] types = {"movie", "restaurant", "show", "late night trip"};
@@ -31,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
     AlertDialog.Builder adb;
     int type = -1;
 
+    /**
+     * this function is called when the activity is created.
+     * <p>
+     *
+     * @param savedInstanceState description
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
         mainPage = findViewById(R.id.main);
     }
 
+    /**
+     * this function is called when the user clicks on the "chose type" button, it opens a dialog with a list of activities to choose from.
+     * <p>
+     *
+     * @param view the button that was clicked.
+     */
     public void choseType(View view) {
         tv.setText("");
         adb = new AlertDialog.Builder(this);
@@ -69,6 +87,12 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * this function is called when the user clicks on the "chose gear" button, it opens a dialog with a list of equipment to choose from.
+     * <p>
+     *
+     * @param view the button that was clicked.
+     */
     public void choseGear(View view) {
 
         adb = new AlertDialog.Builder(this);
@@ -151,6 +175,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * this function is called when the user clicks on the "private message" button, it opens a dialog for the user to enter his name.
+     * <p>
+     *
+     * @param view the button that was clicked.
+     */
     public void privateMsg(View view) {
         adb = new AlertDialog.Builder(this);
         adb.setCancelable(false);
@@ -199,6 +229,12 @@ public class MainActivity extends AppCompatActivity {
         ad.show();
     }
 
+    /**
+     * this function is called when the user clicks on the "reset" button, it resets the activity.
+     * <p>
+     *
+     * @param view the button that was clicked.
+     */
     public void resetAll(View view) {
         tv.setText("there is no hangout yet");
         type = -1;
@@ -206,6 +242,12 @@ public class MainActivity extends AppCompatActivity {
         mainPage.setBackgroundColor(Color.WHITE);
     }
 
+    /**
+     * this function is called when the user clicks on the "credits" button, it opens the credits activity.
+     * <p>
+     *
+     * @param view the button that was clicked.
+     */
     public void goToCredits(View view) {
         Intent intent = new Intent(this, CreditsPage.class);
         startActivity(intent);
