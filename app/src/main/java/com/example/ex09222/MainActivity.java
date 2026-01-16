@@ -197,4 +197,11 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog ad = adb.create();
         ad.show();
     }
+
+    public void resetAll(View view) {
+        tv.setText("there is no hangout yet");
+        type = -1;
+        output = "`";
+        mainPage.setBackgroundColor(Color.WHITE);
+    }
 }
