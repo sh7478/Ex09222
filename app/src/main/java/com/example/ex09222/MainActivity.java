@@ -4,8 +4,10 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
@@ -22,7 +24,8 @@ public class MainActivity extends AppCompatActivity {
     final String[] tripGear = {"headLight", "spare batteries", "UV light", "map", "Mosquito spray", "plastic bag"};
     final String[] restaurantGear = {"wallet", "gum", "portable charger", "phone", "jacket", "glasses"};
     TextView tv;
-    String output;
+    String output = "`";
+    String name;
     LinearLayout mainPage;
     AlertDialog.Builder adb;
     int type = -1;
@@ -68,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
     public void choseGear(View view) {
 
         adb = new AlertDialog.Builder(this);
-
         adb.setCancelable(false);
         output = "";
         if (type == -1) {
@@ -146,5 +148,53 @@ public class MainActivity extends AppCompatActivity {
             AlertDialog ad = adb.create();
             ad.show();
         }
+    }
+
+    public void privateMsg(View view) {
+        adb = new AlertDialog.Builder(this);
+        adb.setCancelable(false);
+        name = "";
+        if(type == -1 || output.equals("`")) {
+            adb.setTitle("Error");
+            if(output.equals("`")) {
+                adb.setMessage("You have to choose equipment first");
+            }
+            else
+            {
+                adb.setMessage("You have to choose activity and equipment first");
+            }
+            adb.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        else {
+            adb.setTitle("Enter your name");
+            final EditText eT = new EditText(this);
+            adb.setView(eT);
+            eT.setHint("Enter your name");
+            adb.setPositiveButton("confirm", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    name = eT.getText().toString();
+                    if (!name.equals("")) {
+                        name = "enjoy " + name;
+                        Toast.makeText(MainActivity.this, name, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "you have to enter your name first", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            adb.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+        }
+        AlertDialog ad = adb.create();
+        ad.show();
     }
 }
